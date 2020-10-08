@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "374350421502",
+    "firebase_url": "https://android-workshop-2020-fproject.firebaseio.com",
+    "project_id": "android-workshop-2020-fproject",
+    "storage_bucket": "android-workshop-2020-fproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:374350421502:android:2159216b0a16fd1e2134af",
+        "android_client_info": {
+          "package_name": "com.miguel.android_workshop_final_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "374350421502-ugt3dqts1lcemomii3d9p5lpmetpfs01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfo1ilYoq5zMxwpw3KYNJJFr60xcQ8VPc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "374350421502-ugt3dqts1lcemomii3d9p5lpmetpfs01.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

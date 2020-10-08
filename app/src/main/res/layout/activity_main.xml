@@ -22,15 +22,15 @@
         android:orientation="horizontal"
         android:layout_marginTop="100dp">
         <TextView
-            android:id="@+id/usernameTitle"
+            android:id="@+id/emailTitle"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Username:"
+            android:text="Email:"
             android:textSize="25sp"
             android:layout_marginLeft="10dp"/>
         <EditText
-            android:id="@+id/usernameEdit"
+            android:id="@+id/emailEdit"
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content"/>
