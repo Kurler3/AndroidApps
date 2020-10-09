@@ -42,9 +42,10 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserProfile profile = snapshot.getValue(UserProfile.class); //Gets user information
-                greetingsText.setText("Welcome, " + profile.userName);
+                if(profile.userName!=null || profile!=null) {
+                    greetingsText.setText("Welcome, " + profile.userName);
+                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(MainMenu.this,error.getCode(), Toast.LENGTH_SHORT).show();
@@ -58,11 +59,10 @@ public class MainMenu extends AppCompatActivity {
 
             }
         });
-
         toDoListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                 startActivity(new Intent(MainMenu.this, ToDoList.class));
             }
         });
 
