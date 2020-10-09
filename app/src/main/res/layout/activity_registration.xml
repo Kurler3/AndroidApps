@@ -14,21 +14,39 @@
         android:textSize="40sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"/>
-
     <LinearLayout
-        android:id="@+id/emailSignUpLayout"
+        android:id="@+id/usernameSignUpLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/signUpTitle"
         android:orientation="horizontal"
         android:layout_marginTop="100dp">
         <TextView
-            android:id="@+id/emailSignUpTitle"
+            android:id="@+id/usernameSignUpTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username:"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"/>
+        <EditText
+            android:id="@+id/usernameSignUpEdit"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/emailSignUpLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usernameSignUpLayout"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+        <TextView
+            android:id="@+id/emailSignUpTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email:"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:layout_marginLeft="10dp"/>
         <EditText
             android:id="@+id/emailSignUpEdit"
@@ -45,11 +63,10 @@
         android:layout_marginTop="20dp">
         <TextView
             android:id="@+id/passWordSignUpTitle"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Password:"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:layout_marginLeft="10dp"/>
         <EditText
             android:id="@+id/passWordSignUpEdit"
@@ -66,11 +83,10 @@
         android:layout_marginTop="20dp">
         <TextView
             android:id="@+id/confirmPasswordSignUpTitle"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Confirm Password:"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:layout_marginLeft="10dp"/>
         <EditText
             android:id="@+id/confirmPasswordSignUpEdit"

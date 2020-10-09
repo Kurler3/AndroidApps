@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
     EditText emailInput, passwordInput;
     Button logInBtn;
-    TextView signUpText;
+    TextView signUpText, forgotPasswordText;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
     int counter = 5;
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         user = firebaseAuth.getCurrentUser(); //Checking if the user is already logged in the app or not
 
-        CheckUserLoggedIn(); //If the user is logged in, direct him to the next main menu
+        CheckUserLoggedInAndVerified(); //If the user is logged in, direct him to the next main menu
 
         logInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, RegistrationActivity.class));
             }
         });
+        forgotPasswordText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,ResetPassword.class));
+            }
+        });
     }
     private void TryLogIn(){
         String email = emailInput.getText().toString().trim();
@@ -59,9 +65,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-
-                    Toast.makeText(MainActivity.this,"Log In Successful!",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(MainActivity.this,MainMenu.class));
+                    UserVerified(); //Checks if the user is verified or not.
                 }else{
                     counter--;
                     Toast.makeText(MainActivity.this,"Email or Password are wrong or don't exist. You Have " + counter + " attempts remaining.",Toast.LENGTH_LONG).show();
@@ -70,14 +74,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private void CheckUserLoggedIn(){
-        if(user!=null) startActivity(new Intent(MainActivity.this, MainMenu.class));
+    private void UserVerified(){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if(user.isEmailVerified()){
+            Toast.makeText(MainActivity.this,"Log In Successful!",Toast.LENGTH_SHORT).show();
+            finish(); //Destroys the log in activity.
+            startActivity(new Intent(MainActivity.this,MainMenu.class));
+        }else{
+            user.sendEmailVerification(); //sends the email again
+            Toast.makeText(MainActivity.this,"You haven't verified your email yet. A new verification e-mail will be sent.",
+                    Toast.LENGTH_LONG).show();
+            firebaseAuth.signOut(); //signs out the user, because this function is called after the log in has been successful
+        }
+    }
+    private void CheckUserLoggedInAndVerified(){
+        if(user!=null && user.isEmailVerified()) startActivity(new Intent(MainActivity.this, MainMenu.class));
     }
     private void InitializeViews(){
         emailInput = (EditText) findViewById(R.id.emailEdit);
         passwordInput = (EditText) findViewById(R.id.passwordEdit);
         logInBtn = (Button) findViewById(R.id.logInBtn);
         signUpText = (TextView) findViewById(R.id.requestSignUpText);
+        forgotPasswordText = (TextView) findViewById(R.id.forgotPasswordText);
     }
     private boolean CheckAdmin(){
         if(emailInput.getText().toString().equals("admin") && passwordInput.getText().toString().equals("admin")){ //Goes straigth to the main menu
