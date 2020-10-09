@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello User"
-        android:textSize="30sp"
+        android:textSize="35sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"/>
 
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/greetingsText"
-        android:layout_marginTop="70dp">
+        android:layout_marginTop="50dp">
         <Button
             android:id="@+id/profileBtn"
             android:layout_width="180dp"
@@ -59,23 +59,31 @@
             android:text="Events"
             android:textSize="35sp"
             android:layout_below="@id/moodBtn"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginLeft="20dp"/>
+        <Button
+            android:id="@+id/waterReminderBtn"
+            android:layout_width="180dp"
+            android:layout_height="150dp"
+            android:text="Water Reminder"
+            android:textSize="30sp"
+            android:layout_below="@id/alarmBtn"
+            android:layout_toRightOf="@id/eventsBtn"/>
         <Button
             android:id="@+id/othersBtn"
             android:layout_width="180dp"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:text="Others"
             android:textSize="35sp"
-            android:layout_below="@id/alarmBtn"
-            android:layout_toRightOf="@id/eventsBtn" />
+            android:layout_below="@id/eventsBtn"
+            android:layout_marginLeft="20dp"/>
         <Button
-            android:id="@+id/settingsBtn"
+            android:id="@+id/aboutBtn"
             android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Settings"
-            android:textSize="33sp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/eventsBtn" />
+            android:layout_height="100dp"
+            android:text="About"
+            android:textSize="35sp"
+            android:layout_below="@id/waterReminderBtn"
+            android:layout_toRightOf="@id/othersBtn"/>
+
     </RelativeLayout>
 </RelativeLayout>

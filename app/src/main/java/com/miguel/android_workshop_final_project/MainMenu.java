@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainMenu extends AppCompatActivity {
+    Button profileBtn, toDoListBtn, moodBtn, alarmBtn, eventsBtn, waterReminderBtn, othersBtn, aboutBtn;
     TextView greetingsText;
     FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
@@ -31,6 +32,8 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         InitializeViews();
+        SettingButtonsOnClick();
+
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         ref = database.getReference(firebaseAuth.getUid());
@@ -48,6 +51,63 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
+    private void SettingButtonsOnClick(){
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        toDoListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        moodBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        alarmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        eventsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        waterReminderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        othersBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        aboutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu_menu_layout,menu);
@@ -58,6 +118,9 @@ public class MainMenu extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.logOutBtn:
                 LogOut();
+                return true;
+            case R.id.settingsMenuOption:
+                //Something
                 return true;
             default:
                 return true;
@@ -70,5 +133,14 @@ public class MainMenu extends AppCompatActivity {
     }
     private void InitializeViews(){
         greetingsText = (TextView) findViewById(R.id.greetingsText);
+
+        profileBtn = (Button) findViewById(R.id.profileBtn);
+        toDoListBtn = (Button) findViewById(R.id.toDoListBtn);
+        moodBtn = (Button) findViewById(R.id.moodBtn);
+        alarmBtn = (Button) findViewById(R.id.alarmBtn);
+        eventsBtn = (Button) findViewById(R.id.eventsBtn);
+        waterReminderBtn = (Button) findViewById(R.id.waterReminderBtn);
+        othersBtn = (Button) findViewById(R.id.othersBtn);
+        aboutBtn = (Button) findViewById(R.id.aboutBtn);
     }
 }
