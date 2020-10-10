@@ -76,14 +76,14 @@ public class MainMenu extends AppCompatActivity {
         alarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(MainMenu.this,AlarmsActivity.class));
             }
         });
 
         eventsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(MainMenu.this,EventsList.class));
             }
         });
 

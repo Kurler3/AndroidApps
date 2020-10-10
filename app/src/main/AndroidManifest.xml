@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ToDoList"></activity>
+        <activity android:name=".EventsList"></activity>
+        <activity android:name=".AlarmsActivity" />
+        <activity android:name=".ToDoList" />
         <activity android:name=".ResetPassword" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".MainMenu" />

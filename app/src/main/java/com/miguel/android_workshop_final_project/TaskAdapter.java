@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import java.util.ArrayList;
 
-public class TaskAdapter  extends Adapter<TaskAdapter.TaskViewHolder> {
+public class TaskAdapter extends Adapter<TaskAdapter.TaskViewHolder> {
     Context ctx;
     ArrayList<Task> taskArrayList;
 
