@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WaterReminder">
+    
+    <TextView
+        android:id="@+id/waterReminderActivityTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Water Reminder"
+        android:textSize="40sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"/>
+    <LinearLayout
+        android:id="@+id/waterIntervalHourSelectLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/waterReminderActivityTitle"
+        android:layout_marginTop="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/waterReminderActivityTitle"
+            android:text="Remind me every"
+            android:layout_marginLeft="15dp"
+            android:textSize="17sp"/>
+        <Spinner
+            android:id="@+id/waterReminderIntervalSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/waterIntervalStartLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/waterIntervalHourSelectLayout"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start: "
+            android:textSize="17sp"/>
+        <TextView
+            android:id="@+id/waterIntervalStartText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mm/hh"
+            android:textSize="15sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/waterIntervalEndLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/waterIntervalStartLayout"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End: "
+            android:textSize="17sp"/>
+        <TextView
+            android:id="@+id/waterIntervalEndText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mm/hh"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

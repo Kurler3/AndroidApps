@@ -84,6 +84,5 @@
             android:textSize="35sp"
             android:layout_below="@id/waterReminderBtn"
             android:layout_toRightOf="@id/othersBtn"/>
-
     </RelativeLayout>
 </RelativeLayout>
