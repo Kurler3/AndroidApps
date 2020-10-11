@@ -3,12 +3,12 @@ package com.miguel.android_workshop_final_project;
 public class Event {
     String date;
     String title;
-    Boolean isChecked=true;
+    Boolean isChecked;
 
-    public Event(String date, String title, Boolean isChecked) {
+    public Event(String date, String title) {
         this.date = date;
         this.title = title;
-        this.isChecked = isChecked;
+        this.isChecked=true;
     }
 
     public String getDate() {

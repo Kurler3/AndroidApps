@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddEventActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/addEventActivityTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add New Event"
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"/>
+    <LinearLayout
+        android:id="@+id/addEventNewDateLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/addEventActivityTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp">
+        <TextView
+            android:id="@+id/newDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: __/__/____"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/chooseNewEventDateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Date"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/addEventNewTitleLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/addEventNewDateLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp">
+        <TextView
+            android:id="@+id/newEventTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Title:"
+            android:textSize="20sp"/>
+        <EditText
+            android:id="@+id/newEventTitleInput"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/addEventCancelBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_below="@id/addEventNewTitleLayout"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="140dp"/>
+    <Button
+        android:id="@+id/addEventConfirmBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:layout_below="@id/addEventNewTitleLayout"
+        android:layout_marginLeft="250dp"
+        android:layout_marginTop="140dp"/>
+
+
+</RelativeLayout>
