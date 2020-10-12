@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Tasks"
+        android:text="To-Do"
         android:textSize="40sp"
         android:layout_marginTop="20dp"/>
     <androidx.recyclerview.widget.RecyclerView
@@ -37,6 +37,4 @@
         android:background="@drawable/delete"
         android:layout_marginTop="10dp"
         android:onClick="DeleteTasks"/>
-
-
 </RelativeLayout>

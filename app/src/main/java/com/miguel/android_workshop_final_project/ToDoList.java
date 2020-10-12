@@ -58,7 +58,6 @@ public class ToDoList extends AppCompatActivity implements AddTaskDialog.AddTask
         }
     }
     private void InitializeViews(){
-
         taskView = (RecyclerView) findViewById(R.id.taskList);
         addTaskBtn = (ImageButton) findViewById(R.id.addTaskBtn);
         deleteTasksBtn = (ImageButton) findViewById(R.id.deleteTasksBtn);

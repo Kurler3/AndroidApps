@@ -3,6 +3,8 @@ package com.miguel.android_workshop_final_project;
 public class Alarm {
     String time;
     Boolean isOn;
+    int hour;
+    int minute;
 
     public Alarm(String time, Boolean isOn) {
         this.time = time;
@@ -23,5 +25,21 @@ public class Alarm {
 
     public void setOn(Boolean on) {
         isOn = on;
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public void setMinute(int minute) {
+        this.minute = minute;
     }
 }

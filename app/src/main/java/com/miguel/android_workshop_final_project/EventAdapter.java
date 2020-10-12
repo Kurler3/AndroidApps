@@ -36,8 +36,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     if(compoundButton.isChecked()){
-                         //int position = .getChildAdapterPosition(v)
-                         // EventsList.eventArrayList.get(compoundButton.)
+                        EventsList.eventCheckedList.set(getAdapterPosition(),true);
+                    }else{
+                        EventsList.eventCheckedList.set(getAdapterPosition(),false);
                     }
                 }
             });

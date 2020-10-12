@@ -19,6 +19,7 @@ public class EventsList extends AppCompatActivity {
     RecyclerView eventListRecyclerView;
     EventAdapter eventAdapter;
     public static ArrayList<Event> eventArrayList;
+    public static ArrayList<Boolean> eventCheckedList;
     RecyclerView.LayoutManager layoutManager;
     ImageButton addEventBtn, deleteEventBtn;
     @Override
@@ -50,8 +51,7 @@ public class EventsList extends AppCompatActivity {
     }
     private void CreateEventArrayList(){
         eventArrayList = new ArrayList<>();
-        eventArrayList.add(new Event("20/11/2020","fucking october"));
-        eventArrayList.add(new Event("20/12/2020","fucking december"));
+        eventCheckedList = new ArrayList<>();
     }
     private void CreateRecyclerView(){
         eventAdapter = new EventAdapter(this,eventArrayList);
@@ -61,9 +61,10 @@ public class EventsList extends AppCompatActivity {
         eventListRecyclerView.setLayoutManager(layoutManager);
     }
     private void DeleteCheckedEvents(){
-        for(int i=0;i<eventArrayList.size();i++){
-            if (eventArrayList.get(i).getChecked()){
+        for(int i=0;i<eventCheckedList.size();i++){
+            if (eventCheckedList.get(i)){
                 eventArrayList.remove(i);
+                eventCheckedList.remove(i);
                 eventAdapter.notifyItemRemoved(i);
                 i--;
             }
@@ -83,6 +84,7 @@ public class EventsList extends AppCompatActivity {
     }
     private void AddEventWithData(String date, String title){
            eventArrayList.add(new Event(date,title));
+           eventCheckedList.add(false);
            eventAdapter.notifyItemInserted(eventArrayList.size()-1);
     }
 }

@@ -67,7 +67,6 @@ public class TaskAdapter extends Adapter<TaskAdapter.TaskViewHolder> {
                     }
                 }
             });
-
             popupMenu.show();
         }
     }
@@ -82,6 +81,7 @@ public class TaskAdapter extends Adapter<TaskAdapter.TaskViewHolder> {
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         Task currentTask = taskArrayList.get(position);
         holder.taskNameView.setText(currentTask.getTaskName());
+        holder.taskCheckBox.setChecked(false);
     }
     @Override
     public int getItemCount() {

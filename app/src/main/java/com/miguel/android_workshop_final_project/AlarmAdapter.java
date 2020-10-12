@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> {
     Context context;
     ArrayList<Alarm> alarmTimeList;
-    Boolean alarmSwitchBool=true;
+
 
     public AlarmAdapter(Context context, ArrayList<Alarm> alarmTime) {
         this.context = context;
@@ -36,9 +36,9 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     if(!compoundButton.isChecked()){
-                        alarmSwitchBool=false;
+                        AlarmsActivity.alarmCheckedArray.set(getAdapterPosition(),false);
                     }else{
-                        alarmSwitchBool=true;
+                        AlarmsActivity.alarmCheckedArray.set(getAdapterPosition(),true);
                     }
                 }
             });

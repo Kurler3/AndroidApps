@@ -21,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainMenu extends AppCompatActivity {
-    Button profileBtn, toDoListBtn, moodBtn, alarmBtn, eventsBtn, waterReminderBtn, othersBtn, aboutBtn;
+    Button toDoListBtn, alarmBtn, eventsBtn, waterReminderBtn, aboutBtn;
     TextView greetingsText;
     FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
@@ -53,26 +53,12 @@ public class MainMenu extends AppCompatActivity {
         });
     }
     private void SettingButtonsOnClick(){
-        profileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
         toDoListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                  startActivity(new Intent(MainMenu.this, ToDoList.class));
             }
         });
-
-        moodBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         alarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,14 +79,6 @@ public class MainMenu extends AppCompatActivity {
                   startActivity(new Intent(MainMenu.this,WaterReminder.class));
             }
         });
-
-        othersBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         aboutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,14 +111,10 @@ public class MainMenu extends AppCompatActivity {
     }
     private void InitializeViews(){
         greetingsText = (TextView) findViewById(R.id.greetingsText);
-
-        profileBtn = (Button) findViewById(R.id.profileBtn);
         toDoListBtn = (Button) findViewById(R.id.toDoListBtn);
-        moodBtn = (Button) findViewById(R.id.moodBtn);
         alarmBtn = (Button) findViewById(R.id.alarmBtn);
         eventsBtn = (Button) findViewById(R.id.eventsBtn);
         waterReminderBtn = (Button) findViewById(R.id.waterReminderBtn);
-        othersBtn = (Button) findViewById(R.id.othersBtn);
         aboutBtn = (Button) findViewById(R.id.aboutBtn);
     }
 }
