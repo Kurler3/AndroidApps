@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -18,23 +20,29 @@ import java.util.ArrayList;
 public class TaskAdapter extends Adapter<TaskAdapter.TaskViewHolder> {
     Context ctx;
     ArrayList<Task> taskArrayList;
+    ArrayList<Boolean> taskCheckedList;
 
-    public TaskAdapter(Context ctx, ArrayList<Task> taskArrayList){
+    public TaskAdapter(Context ctx, ArrayList<Task> taskArrayList,ArrayList<Boolean> taskCheckedList ){
         this.ctx=ctx;
         this.taskArrayList=taskArrayList;
+        this.taskCheckedList=taskCheckedList;
     }
     public class TaskViewHolder extends RecyclerView.ViewHolder{
         TextView taskNameView;
-        ImageButton taskOptions;
+        CheckBox taskCheckBox;
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             taskNameView = itemView.findViewById(R.id.taskName);
-            taskOptions = itemView.findViewById(R.id.taskOptionsImageBtn);
+            taskCheckBox = itemView.findViewById(R.id.taskCheckBox);
 
-            taskOptions.setOnClickListener(new View.OnClickListener() {
+            taskCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onClick(View view) {
-                     ShowPopUpTaskOptions(view);
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(taskCheckBox.isChecked()){
+                        ToDoList.taskCheckedList.set(getAdapterPosition(),true);
+                    }else{
+                        ToDoList.taskCheckedList.set(getAdapterPosition(),false);
+                    }
                 }
             });
         }

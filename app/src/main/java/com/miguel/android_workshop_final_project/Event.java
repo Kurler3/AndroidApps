@@ -8,7 +8,7 @@ public class Event {
     public Event(String date, String title) {
         this.date = date;
         this.title = title;
-        this.isChecked=true;
+        this.isChecked=false;
     }
 
     public String getDate() {

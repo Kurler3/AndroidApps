@@ -13,12 +13,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class WaterReminder extends AppCompatActivity implements AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener {
+    int intervalHours[] = {1,2,4,6};
     Spinner intervalSpinner;
-    TextView intervalStartText, intervalEndText;
+    TextView intervalStartText, intervalEndText, hourIntervalWarning;
     boolean isSettingStartTime;
     SpannableString startTime, endTime;
+    int startHour, startMinutes, endHour, endMinutes, hourInterval;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,26 +76,96 @@ public class WaterReminder extends AppCompatActivity implements AdapterView.OnIt
         intervalSpinner = findViewById(R.id.waterReminderIntervalSpinner);
         intervalStartText = findViewById(R.id.waterIntervalStartText);
         intervalEndText = findViewById(R.id.waterIntervalEndText);
+        hourIntervalWarning = findViewById(R.id.hourIntervalWarning);
+
+
+        startHour = 9;
+        endHour=20;
+        hourInterval = 1;
+        startMinutes = 0;
+        endMinutes = 0;
+        //No need to set the minutes for both to 0 because they are 0 already
     }
 
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
-        if(isSettingStartTime){
-            //do some logic between the end and the interval times
+        if(isSettingStartTime && IsStartTimeChoosenValid(i,i1)){
 
-            intervalStartText.setText(i + "/" + i1);
-        }else{
-            //some logic between the start and the interval times
+            SettingStartTime(i,i1);
 
-            intervalEndText.setText(i + "/" + i1);
+            startHour = i;
+            startMinutes = i1;
+        }else if(!isSettingStartTime && IsEndTimeChoosenValid(i,i1)){
+
+            SettingEndTime(i,i1);
+
+            endHour = i;
+            endMinutes = i1;
         }
     }
-
+    private void SettingStartTime(int i, int i1){
+        if(i<10 && i1<10){
+            intervalStartText.setText("0" + i + ":" + "0" + i1);
+        }else if(i<10){
+            intervalStartText.setText("0" + i + ":" + i1);
+        }else if(i1<10){
+            intervalStartText.setText(i + ":" + "0" + i1);
+        }else{
+            intervalStartText.setText(i + ":" + i1);
+        }
+    }
+    private void SettingEndTime(int i, int i1){
+        if(i<10 && i1<10){
+            intervalEndText.setText("0" + i + ":" + "0" + i1);
+        }else if(i<10){
+            intervalEndText.setText("0" + i + ":" + i1);
+        }else if(i1<10){
+            intervalEndText.setText(i + ":" + "0" + i1);
+        }else{
+            intervalEndText.setText(i + ":" + i1);
+        }
+    }
+    private boolean IsStartTimeChoosenValid(int hour, int minutes){
+        if(hour > endHour){
+            Toast.makeText(WaterReminder.this,"Start hour cannot be greater than End hour!",Toast.LENGTH_LONG).show();
+            return false;
+        }else if( ((endHour - hour) < hourInterval) || ((endHour - hour)==0 && (endMinutes-minutes)<0) || ((hourInterval == (endHour-hour)) && ((endMinutes-minutes)<0)) ){
+            Toast.makeText(WaterReminder.this,"Reminding interval is bigger than the difference between start and end hours!",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+    private boolean IsEndTimeChoosenValid(int hour, int minutes){
+        if(hour < startHour){
+            Toast.makeText(WaterReminder.this,"End hour cannot be smaller than Start hour!",Toast.LENGTH_LONG).show();
+            return false;
+        }else if( ((endHour - hour) < hourInterval) || ((hour - startHour)==0 && (minutes-startMinutes)<0) || ((hourInterval == (hour-startHour)) && ((minutes-startMinutes)<0))){
+            Toast.makeText(WaterReminder.this,"Reminding interval is bigger than the difference between start and end hours!",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+    private boolean isHourIntervalChoosenValid(int hourChosen){
+        if(hourChosen > (endHour-startHour)){
+            return false;
+        }else if((hourChosen == (endHour-startHour)) && ((endMinutes-startMinutes)<0)){
+            return false;
+        }
+        return true;
+    }
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        //handle here the hour interval selected
-    }
+        if(isHourIntervalChoosenValid(intervalHours[i])){
+            //update the hour interval
+            hourInterval = intervalHours[i];
+            hourIntervalWarning.setText("");
 
+
+        }else{
+             hourIntervalWarning.setText("Hour Reminder Interval Not Appropriate. Change It Please.");
+             hourInterval=intervalHours[i];
+        }
+    }
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 

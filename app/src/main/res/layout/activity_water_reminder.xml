@@ -47,12 +47,14 @@
             android:layout_height="wrap_content"
             android:text="Start: "
             android:textSize="17sp"/>
+
         <TextView
             android:id="@+id/waterIntervalStartText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="mm/hh"
-            android:textSize="15sp"/>
+            android:text="09:00"
+            android:textColor="#008EFF"
+            android:textSize="15sp" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/waterIntervalEndLayout"
@@ -71,9 +73,22 @@
             android:id="@+id/waterIntervalEndText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="mm/hh"
-            android:textSize="15sp"/>
+            android:text="20:00"
+            android:textColor="#008EFF"
+            android:textSize="15sp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/hourIntervalWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/waterIntervalEndLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
 
 
 

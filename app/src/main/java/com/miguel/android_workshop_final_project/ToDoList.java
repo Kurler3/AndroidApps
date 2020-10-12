@@ -16,7 +16,8 @@ public class ToDoList extends AppCompatActivity implements AddTaskDialog.AddTask
     static TaskAdapter taskAdapter;
     RecyclerView.LayoutManager layoutManager;
     static ArrayList<Task> taskArrayList;
-    ImageButton addTaskBtn;
+    static ArrayList<Boolean> taskCheckedList;
+    ImageButton addTaskBtn, deleteTasksBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,23 +25,20 @@ public class ToDoList extends AppCompatActivity implements AddTaskDialog.AddTask
 
         InitializeViews();
 
-        CreateArrayList();
+        CreateArrayLists();
 
         CreateRecyclerView();
 
     }
     private void CreateRecyclerView(){
-        taskAdapter = new TaskAdapter(this,taskArrayList);
+        taskAdapter = new TaskAdapter(this,taskArrayList,taskCheckedList);
         layoutManager = new LinearLayoutManager(this);
         taskView.setAdapter(taskAdapter);
         taskView.setLayoutManager(layoutManager);
     }
-    private void CreateArrayList(){
+    private void CreateArrayLists(){
         taskArrayList = new ArrayList<>();
-        taskArrayList.add(new Task("example task1"));
-        taskArrayList.add(new Task("example task2"));
-        taskArrayList.add(new Task("example task3"));
-        taskArrayList.add(new Task("example task4"));
+        taskCheckedList = new ArrayList<>();
     }
 
     public void AddTask(View view) {
@@ -49,15 +47,27 @@ public class ToDoList extends AppCompatActivity implements AddTaskDialog.AddTask
         addTaskDialog.show(getSupportFragmentManager(),"Add Task Dialog");
 
     }
+    public void DeleteTasks(View view){
+        for(int i=0;i<taskCheckedList.size();i++){
+            if (taskCheckedList.get(i)==true){
+                taskCheckedList.remove(i);
+                taskArrayList.remove(i);
+                taskAdapter.notifyItemRemoved(i);
+                i--;
+            }
+        }
+    }
     private void InitializeViews(){
 
         taskView = (RecyclerView) findViewById(R.id.taskList);
         addTaskBtn = (ImageButton) findViewById(R.id.addTaskBtn);
+        deleteTasksBtn = (ImageButton) findViewById(R.id.deleteTasksBtn);
     }
 
     @Override
     public void ApplyTaskName(String newTaskName) {
         taskArrayList.add(0,new Task(newTaskName));
+        taskCheckedList.add(0,false);
 
         taskAdapter.notifyItemInserted(0);
         Toast.makeText(ToDoList.this,"New Task Has Been Added!", Toast.LENGTH_SHORT).show();
