@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -27,12 +28,14 @@ public class AlarmsActivity extends AppCompatActivity implements TimePickerDialo
     public static final String ALARM_LIST = "alarmList";
     public static final String ALARM_CHECKED_LIST = "alarmCheckedList";
 
+    int requestCode;
     RecyclerView alarmListRecyclerView;
     AlarmAdapter alarmAdapter;
     RecyclerView.LayoutManager layoutManager;
     ImageButton addAlarmBtn;
     public static ArrayList<Alarm> alarmArray;
     public static ArrayList<Boolean> alarmCheckedArray;
+    public static ArrayList<NotificationChannel> notificationChannels;
     AlarmTimePicker alarmTimePicker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +84,7 @@ public class AlarmsActivity extends AppCompatActivity implements TimePickerDialo
         alarmArray.add(positionToAdd,new Alarm(newAlarmTime,true));
         alarmCheckedArray.add(positionToAdd,true);
 
-        CreateNewAlarmNotification();
+        CreateNewAlarmNotification(i,i1);
         SaveData();
 
         alarmAdapter.notifyItemInserted(positionToAdd);
@@ -139,17 +142,19 @@ public class AlarmsActivity extends AppCompatActivity implements TimePickerDialo
 
         alarmCheckedArray = tinyDB.getListBoolean(ALARM_CHECKED_LIST);
     }
-    private void CreateNewAlarmNotification(){
+    private void CreateNewAlarmNotification(int hour, int minutes){
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 00);
-        calendar.set(Calendar.MINUTE, 00);
+         //calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minutes);
+        calendar.set(Calendar.SECOND,0);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmBroadcastReceiver.class);
-        PendingIntent pendingIntent =PendingIntent.getBroadcast(this.getApplicationContext(), 0, intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent =PendingIntent.getBroadcast(this, requestCode, intent,0);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 24*60*60*1000, pendingIntent);
+        requestCode++;
     }
     private void CancelAlarm(){
 

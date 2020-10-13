@@ -10,10 +10,12 @@
         android:id="@+id/greetingsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello User"
-        android:textSize="40sp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"/>
+        android:layout_marginTop="45dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Hello User"
+        android:textColor="#000000"
+        android:textSize="40sp" />
 
     <RelativeLayout
         android:id="@+id/uiLayout"
@@ -21,48 +23,58 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/greetingsText"
         android:layout_marginTop="40dp">
+
         <Button
             android:id="@+id/toDoListBtn"
             android:layout_width="180dp"
             android:layout_height="150dp"
+            android:layout_marginLeft="15dp"
+            android:fontFamily="sans-serif-light"
             android:text="TO-DO"
-            android:textSize="35sp"
-            android:layout_marginLeft="15dp"/>
+            android:textSize="35sp" />
+
         <Button
             android:id="@+id/alarmBtn"
             android:layout_width="180dp"
             android:layout_height="150dp"
-            android:text="Alarm"
-            android:textSize="35sp"
+            android:layout_marginLeft="5dp"
             android:layout_toRightOf="@id/toDoListBtn"
-            android:layout_marginLeft="5dp"/>
+            android:fontFamily="sans-serif-light"
+            android:text="Alarm"
+            android:textSize="35sp" />
+
         <Button
             android:id="@+id/eventsBtn"
             android:layout_width="180dp"
             android:layout_height="150dp"
-            android:text="Events"
-            android:textSize="35sp"
             android:layout_below="@id/toDoListBtn"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="15dp"/>
+            android:fontFamily="sans-serif-light"
+            android:text="Events"
+            android:textSize="35sp" />
+
         <Button
             android:id="@+id/waterReminderBtn"
             android:layout_width="180dp"
             android:layout_height="150dp"
-            android:text="Water Reminder"
-            android:textSize="30sp"
             android:layout_below="@id/alarmBtn"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/eventsBtn"/>
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/eventsBtn"
+            android:fontFamily="sans-serif-light"
+            android:text="Water Reminder"
+            android:textSize="30sp" />
+
         <Button
             android:id="@+id/aboutBtn"
             android:layout_width="180dp"
             android:layout_height="100dp"
-            android:text="About"
-            android:textSize="35sp"
             android:layout_below="@id/waterReminderBtn"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-            android:layout_centerHorizontal="true"/>
+            android:fontFamily="sans-serif-light"
+            android:text="About"
+            android:textSize="35sp" />
     </RelativeLayout>
 </RelativeLayout>
