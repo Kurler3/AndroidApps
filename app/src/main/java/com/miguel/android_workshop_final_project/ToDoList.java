@@ -4,14 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ToDoList extends AppCompatActivity implements AddTaskDialog.AddTaskListener {
+    public static final String TASK_ARRAY = "taskArray";
+    public static final String TASK_CHECKED_ARRAY = "taskCheckedArray";
+
     RecyclerView taskView;
     static TaskAdapter taskAdapter;
     RecyclerView.LayoutManager layoutManager;
@@ -27,7 +32,11 @@ public class ToDoList extends AppCompatActivity implements AddTaskDialog.AddTask
 
         CreateArrayLists();
 
+        LoadingData();
+
         CreateRecyclerView();
+
+
 
     }
     private void CreateRecyclerView(){
@@ -37,8 +46,8 @@ public class ToDoList extends AppCompatActivity implements AddTaskDialog.AddTask
         taskView.setLayoutManager(layoutManager);
     }
     private void CreateArrayLists(){
-        taskArrayList = new ArrayList<>();
-        taskCheckedList = new ArrayList<>();
+        taskArrayList = new ArrayList<Task>();
+        taskCheckedList = new ArrayList<Boolean>();
     }
 
     public void AddTask(View view) {
@@ -53,6 +62,9 @@ public class ToDoList extends AppCompatActivity implements AddTaskDialog.AddTask
                 taskCheckedList.remove(i);
                 taskArrayList.remove(i);
                 taskAdapter.notifyItemRemoved(i);
+
+                SaveData();
+
                 i--;
             }
         }
@@ -69,10 +81,30 @@ public class ToDoList extends AppCompatActivity implements AddTaskDialog.AddTask
         taskCheckedList.add(0,false);
 
         taskAdapter.notifyItemInserted(0);
+
+        SaveData();
+
         Toast.makeText(ToDoList.this,"New Task Has Been Added!", Toast.LENGTH_SHORT).show();
     }
-    public static void RemoveTask(int position){
-        taskArrayList.remove(position);
-        taskAdapter.notifyItemRemoved(position);
+    private void SaveData(){
+        TinyDB myDb = new TinyDB(getApplicationContext());
+
+        ArrayList<Object> tasksObjects = new ArrayList<Object>();
+        //Creating custom object array from task array
+        for(Task task : taskArrayList){
+             tasksObjects.add((Object) task);
+        }
+
+        myDb.putListObject(TASK_ARRAY, tasksObjects);
+        myDb.putListBoolean(TASK_CHECKED_ARRAY, taskCheckedList);
+    }
+    private void LoadingData(){
+        TinyDB tinyDB = new TinyDB(getApplicationContext());
+        ArrayList<Object> taskObjectArray = new ArrayList<Object>();
+        taskObjectArray = tinyDB.getListObject(TASK_ARRAY, Task.class);
+        for(Object task : taskObjectArray){
+            taskArrayList.add((Task) task);
+        }
+        taskCheckedList = tinyDB.getListBoolean(TASK_CHECKED_ARRAY);
     }
 }

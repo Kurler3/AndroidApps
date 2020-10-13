@@ -15,15 +15,20 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class WaterReminder extends AppCompatActivity implements AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener {
-    int intervalHours[] = {1,2,4,6};
+    public static final String START_HOUR = "startHour";
+    public static final String END_HOUR = "endHour";
+    public static final String START_MINUTES = "startMinutes";
+    public static final String END_MINUTES = "endMinutes";
+    public static final String HOUR_INTERVAL = "hourInterval";
+
+    ArrayList<Integer> intervalHoursArray;
     Spinner intervalSpinner;
     TextView intervalStartText, intervalEndText, hourIntervalWarning;
     boolean isSettingStartTime;
-    SpannableString startTime, endTime;
     int startHour, startMinutes, endHour, endMinutes, hourInterval;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +36,7 @@ public class WaterReminder extends AppCompatActivity implements AdapterView.OnIt
 
         InstanteateViews();
         HourSelectSpinner();
-        //HighlightText();
+        LoadData();
 
         intervalStartText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,18 +54,7 @@ public class WaterReminder extends AppCompatActivity implements AdapterView.OnIt
                 endTimePicker.show(getSupportFragmentManager(),"Choose End Time");
             }
         });
-
     }
-    /*private void HighlightText(){
-        startTime = new SpannableString("mm/hh");
-        endTime = new SpannableString("mm/hh");
-
-        startTime.setSpan(new BackgroundColorSpan(Color.BLACK),0,startTime.length(),0);
-        endTime.setSpan(new BackgroundColorSpan(Color.BLACK),0,endTime.length(),0);
-
-        intervalStartText.setText(startTime);
-        intervalEndText.setText(endTime);
-    }*/
     private void HourSelectSpinner(){
         intervalSpinner = findViewById(R.id.waterReminderIntervalSpinner);
 
@@ -77,30 +71,35 @@ public class WaterReminder extends AppCompatActivity implements AdapterView.OnIt
         intervalStartText = findViewById(R.id.waterIntervalStartText);
         intervalEndText = findViewById(R.id.waterIntervalEndText);
         hourIntervalWarning = findViewById(R.id.hourIntervalWarning);
+        intervalHoursArray = new ArrayList<>();
 
-
+        intervalHoursArray.add(1);
+        intervalHoursArray.add(2);
+        intervalHoursArray.add(4);
+        intervalHoursArray.add(6);
         startHour = 9;
         endHour=20;
         hourInterval = 1;
         startMinutes = 0;
         endMinutes = 0;
         //No need to set the minutes for both to 0 because they are 0 already
+        SaveData();
     }
 
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
         if(isSettingStartTime && IsStartTimeChoosenValid(i,i1)){
-
             SettingStartTime(i,i1);
 
             startHour = i;
             startMinutes = i1;
+            SaveData();
         }else if(!isSettingStartTime && IsEndTimeChoosenValid(i,i1)){
-
             SettingEndTime(i,i1);
 
             endHour = i;
             endMinutes = i1;
+            SaveData();
         }
     }
     private void SettingStartTime(int i, int i1){
@@ -155,19 +154,41 @@ public class WaterReminder extends AppCompatActivity implements AdapterView.OnIt
     }
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if(isHourIntervalChoosenValid(intervalHours[i])){
+        if(isHourIntervalChoosenValid(intervalHoursArray.get(i))){
             //update the hour interval
-            hourInterval = intervalHours[i];
+            hourInterval = intervalHoursArray.get(i);
             hourIntervalWarning.setText("");
-
-
         }else{
              hourIntervalWarning.setText("Hour Reminder Interval Not Appropriate. Change It Please.");
-             hourInterval=intervalHours[i];
+             hourInterval=intervalHoursArray.get(i);
         }
+        SaveData();
     }
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+    private void SaveData(){
+        TinyDB tinyDB = new TinyDB(getApplicationContext());
+
+        tinyDB.putInt(START_HOUR,startHour);
+        tinyDB.putInt(START_MINUTES,startMinutes);
+        tinyDB.putInt(END_HOUR,endHour);
+        tinyDB.putInt(END_MINUTES,endMinutes);
+        tinyDB.putInt(HOUR_INTERVAL,hourInterval);
+    }
+    private void LoadData(){
+        TinyDB tinyDB = new TinyDB(getApplicationContext());
+        //Starting time
+        int startHour = tinyDB.getInt(START_HOUR);
+        int startMinutes = tinyDB.getInt(START_MINUTES);
+        SettingStartTime(startHour,startMinutes);
+        //Ending time
+        int endHour = tinyDB.getInt(END_HOUR);
+        int endMinutes = tinyDB.getInt(END_MINUTES);
+        SettingEndTime(endHour,endMinutes);
+        //Spinner
+        int hourInterval = tinyDB.getInt(HOUR_INTERVAL);
+        intervalSpinner.setSelection(intervalHoursArray.indexOf(hourInterval));
     }
 }

@@ -41,6 +41,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                     resultIntent.putExtra("title",newEventTitle);
                     resultIntent.putExtra("date",newDateInput);
 
+
                     setResult(RESULT_OK, resultIntent);
                     finish();
                 }
@@ -65,8 +66,12 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
 
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-         newDateInput = i2 + "/" + i1 + "/" + i;
-         newDateText.setText("Date:" +  newDateInput);
+        EventsList.year = i;
+        EventsList.month = i1;
+        EventsList.day = i2;
+
+        newDateInput = i2 + "/" + i1 + "/" + i;
+        newDateText.setText("Date:" +  newDateInput);
 
     }
     private boolean CheckDataInputed(){

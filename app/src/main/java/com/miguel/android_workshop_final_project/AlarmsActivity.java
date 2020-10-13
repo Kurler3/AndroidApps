@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,10 +18,15 @@ import android.widget.TimePicker;
 
 import org.joda.time.LocalTime;
 
+import java.sql.Array;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class AlarmsActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+    public static final String ALARM_LIST = "alarmList";
+    public static final String ALARM_CHECKED_LIST = "alarmCheckedList";
+
     RecyclerView alarmListRecyclerView;
     AlarmAdapter alarmAdapter;
     RecyclerView.LayoutManager layoutManager;
@@ -33,8 +41,8 @@ public class AlarmsActivity extends AppCompatActivity implements TimePickerDialo
 
         InstanteateViews();
         CreateAlarmArrayList();
+        LoadData();
         CreatingRecyclerView();
-
 
         addAlarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +68,6 @@ public class AlarmsActivity extends AppCompatActivity implements TimePickerDialo
         alarmListRecyclerView.setAdapter(alarmAdapter);
         alarmListRecyclerView.setLayoutManager(layoutManager);
     }
-
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) { //After picking the time, this method gets called back
         int positionToAdd = GetIdealPositionToAdd(i,i1);
@@ -73,6 +80,9 @@ public class AlarmsActivity extends AppCompatActivity implements TimePickerDialo
 
         alarmArray.add(positionToAdd,new Alarm(newAlarmTime,true));
         alarmCheckedArray.add(positionToAdd,true);
+
+        CreateNewAlarmNotification();
+        SaveData();
 
         alarmAdapter.notifyItemInserted(positionToAdd);
     }
@@ -104,5 +114,44 @@ public class AlarmsActivity extends AppCompatActivity implements TimePickerDialo
         }
         return i;
     }
+    private void SaveData(){
+        TinyDB tinyDB = new TinyDB(getApplicationContext());
 
+        ArrayList<Object> alarmObject = new ArrayList<Object>();
+        for(Alarm alarm : alarmArray){
+            alarmObject.add((Object) alarm);
+        }
+
+        tinyDB.putListObject(ALARM_LIST,alarmObject);
+        tinyDB.putListBoolean(ALARM_CHECKED_LIST,alarmCheckedArray);
+
+    }
+    private void LoadData(){
+        TinyDB tinyDB = new TinyDB(getApplicationContext());
+
+        ArrayList<Object> alarmObjects = new ArrayList<Object>();
+
+        alarmObjects = tinyDB.getListObject(ALARM_LIST,Alarm.class);
+
+        for(Object alarm : alarmObjects){
+            alarmArray.add((Alarm) alarm);
+        }
+
+        alarmCheckedArray = tinyDB.getListBoolean(ALARM_CHECKED_LIST);
+    }
+    private void CreateNewAlarmNotification(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 00);
+        calendar.set(Calendar.MINUTE, 00);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmBroadcastReceiver.class);
+        PendingIntent pendingIntent =PendingIntent.getBroadcast(this.getApplicationContext(), 0, intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                24*60*60*1000, pendingIntent);
+    }
+    private void CancelAlarm(){
+
+    }
 }

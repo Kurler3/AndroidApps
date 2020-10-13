@@ -12,8 +12,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class EventsList extends AppCompatActivity {
+    public static final String EVENT_ARRAY = "eventArray";
+    public static final String EVENT_CHECKED_ARRAY = "eventCheckedArray";
     public  static final int REQUEST_NEW_EVENT_DATA=2;
 
     RecyclerView eventListRecyclerView;
@@ -22,6 +25,7 @@ public class EventsList extends AppCompatActivity {
     public static ArrayList<Boolean> eventCheckedList;
     RecyclerView.LayoutManager layoutManager;
     ImageButton addEventBtn, deleteEventBtn;
+    public static int year,month,day;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +33,7 @@ public class EventsList extends AppCompatActivity {
 
         InitializeViews();
         CreateEventArrayList();
+        LoadData();
         CreateRecyclerView();
 
         addEventBtn.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +72,7 @@ public class EventsList extends AppCompatActivity {
                 eventCheckedList.remove(i);
                 eventAdapter.notifyItemRemoved(i);
                 i--;
+                SaveData();
             }
         }
     }
@@ -79,6 +85,7 @@ public class EventsList extends AppCompatActivity {
               String date = data.getStringExtra("date");
               String title = data.getStringExtra("title");
 
+              CreateNotification();
               AddEventWithData(date,title);
         }
     }
@@ -86,5 +93,44 @@ public class EventsList extends AppCompatActivity {
            eventArrayList.add(new Event(date,title));
            eventCheckedList.add(false);
            eventAdapter.notifyItemInserted(eventArrayList.size()-1);
+           SaveData();
+    }
+    private void SaveData(){
+        TinyDB tinyDB = new TinyDB(getApplicationContext());
+
+        ArrayList<Object> eventObject = new ArrayList<Object>();
+        for(Event event : eventArrayList){
+            eventObject.add((Object) event);
+        }
+
+        tinyDB.putListObject(EVENT_ARRAY,eventObject);
+        tinyDB.putListBoolean(EVENT_CHECKED_ARRAY,eventCheckedList);
+
+    }
+    private void LoadData(){
+        TinyDB tinyDB = new TinyDB(getApplicationContext());
+
+        ArrayList<Object> eventObjects = new ArrayList<Object>();
+
+        eventObjects = tinyDB.getListObject(EVENT_ARRAY,Event.class);
+
+        for(Object event : eventObjects){
+            eventArrayList.add((Event) event);
+        }
+
+        eventCheckedList = tinyDB.getListBoolean(EVENT_CHECKED_ARRAY);
+    }
+    private void CreateNotification(){
+        int yearNotify = year;
+        int monthNotify = month;
+        int dayNotify = day;
+
+        Calendar cal = Calendar.getInstance();
+        int curYear = cal.get(Calendar.YEAR);
+        int curMonth = cal.get(Calendar.MONTH);
+        int curDay = cal.get(Calendar.DAY_OF_MONTH);
+
+
+
     }
 }
