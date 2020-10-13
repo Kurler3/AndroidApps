@@ -150,8 +150,8 @@ public class AlarmsActivity extends AppCompatActivity implements TimePickerDialo
         calendar.set(Calendar.SECOND,0);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmBroadcastReceiver.class);
-        PendingIntent pendingIntent =PendingIntent.getBroadcast(this, requestCode, intent,0);
+        Intent intent = new Intent(this, AlarmNotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, intent,0);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 24*60*60*1000, pendingIntent);
         requestCode++;

@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat;
 
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
     public static int alarmCount;
+    public static int notificationId;
     private NotificationManager notificationManager;
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -30,12 +31,13 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         notification.setLightColor(R.color.colorPrimary);
         notification.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
 
+
         CreateNotificationManager(context);
         notificationManager.createNotificationChannel(notification);
         //notificationManager.createNotificationChannel(AlarmsActivity.notificationChannels.get(alarmCount));
         NotificationCompat.Builder notificationBuilder = getChannelNotification(context,String.valueOf(alarmCount),"Alarm");
-        notificationManager.notify(alarmCount,notificationBuilder.build());
-
+        notificationManager.notify(notificationId,notificationBuilder.build());
+        notificationId++;
         alarmCount++;
     }
     private void CreateNotificationManager(Context context){
